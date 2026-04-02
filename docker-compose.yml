@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:16-alpine          # pinned stable + lightweight (better than :latest)
+    image: postgres:16-alpine
     container_name: habit-tracker-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: postgresdb
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password123   # Change this to something stronger if you want
+      POSTGRES_PASSWORD: password123
     ports:
-      - "7070:5432"                     # ← Host port 7070 → Container port 5432
+      - "5555:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -19,7 +19,7 @@ services:
     container_name: habit-tracker-redis
     restart: unless-stopped
     ports:
-      - "6060:6379"                     # ← Host port 6060 → Container port 6379
+      - "6060:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
