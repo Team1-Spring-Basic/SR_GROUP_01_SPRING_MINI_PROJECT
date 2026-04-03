@@ -27,7 +27,7 @@ public class FileController {
 
         FileMetaData fileMetaData = s3FileService.uploadFile(file);
 
-        ApiResponse<FileMetaData> fileMetaResponse = ApiResponse.<FileMetaData>builder().isSuccess(true).status(HttpStatus.CREATED).message("File upload Successfully").payload(fileMetaData).timestamp(Instant.now()).build();
+        ApiResponse<FileMetaData> fileMetaResponse = ApiResponse.<FileMetaData>builder().isSuccess(true).status(HttpStatus.CREATED.name()).message("File upload Successfully").payload(fileMetaData).timestamp(Instant.now()).build();
 
 
 
