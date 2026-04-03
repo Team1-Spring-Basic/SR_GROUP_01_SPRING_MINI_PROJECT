@@ -11,10 +11,12 @@ import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
 import software.amazon.awssdk.services.s3.model.NoSuchBucketException;
 
 
+
 @RequiredArgsConstructor
 public class S3Util {
 
     private final S3Client s3Client;
+
 
     public void createBucketIfNotExists(String bucketName){
         try{

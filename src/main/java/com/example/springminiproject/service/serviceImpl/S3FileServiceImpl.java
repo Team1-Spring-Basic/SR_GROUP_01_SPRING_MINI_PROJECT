@@ -26,9 +26,9 @@ import java.io.InputStream;
 public class S3FileServiceImpl implements S3FileService {
 
     private final S3Client s3Client;
-    private S3Util s3Util;
-    private MultipartFileHelperUtil multipartFileHelperUtil;
-    private UuidGenerator uuidGenerator;
+    public S3Util s3Util;
+    public MultipartFileHelperUtil multipartFileHelperUtil;
+    public UuidGenerator uuidGenerator;
 
     @Value("${rustfs.bucket.name}")
     private String bucketName;
