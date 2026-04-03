@@ -16,6 +16,6 @@ public class Habit {
     private String description;
     private String frequency;
     private Boolean isActive;
-    private AppUser appUser;
-    private Instant createAt;
+    private AppUserResponse appUserResponse;
+    private Instant createdAt;
 }
