@@ -10,12 +10,13 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Habit {
-    private UUID habitId;
-    private String title;
-    private String description;
-    private String frequency;
-    private Boolean isActive;
-    private AppUserResponse appUserResponse;
+public class AppUserResponse {
+    private UUID appUserId;
+    private String username;
+    private String email;
+    private Integer level;
+    private Integer xp;
+    private String profileImageUrl;
+    private Boolean isVerified;
     private Instant createdAt;
 }

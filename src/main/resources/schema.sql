@@ -87,3 +87,26 @@ CREATE INDEX idx_aua_achievement     ON app_user_achievements(achievement_id);
 CREATE INDEX idx_user_roles_user     ON app_user_roles(app_user_id);
 CREATE INDEX idx_user_roles_role     ON app_user_roles(role_id);
 
+
+
+-- SELECT
+--     hl.habit_log_id,
+--     hl.log_date,
+--     hl.status,
+--     hl.xp_earned,
+--     hl.habit_id,
+--
+--     h.habit_id AS h_habit_id,
+--     h.title,
+--     h.app_user_id,
+--
+--     u.app_user_id AS u_app_user_id,
+--     u.username,
+--     u.email
+--
+-- FROM habit_logs hl
+--          LEFT JOIN habits h ON hl.habit_id = h.habit_id
+--          LEFT JOIN app_users u ON h.app_user_id = u.app_user_id
+--
+-- WHERE hl.habit_log_id = '0cd85efb-2136-401e-8879-16a2c4c56ea1';
+--
