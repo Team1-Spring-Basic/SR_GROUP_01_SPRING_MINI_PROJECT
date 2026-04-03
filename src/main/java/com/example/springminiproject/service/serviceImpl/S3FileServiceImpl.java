@@ -4,9 +4,10 @@ import com.example.springminiproject.model.entity.FileMetaData;
 import com.example.springminiproject.service.S3FileService;
 import com.example.springminiproject.util.MultipartFileHelperUtil;
 import com.example.springminiproject.util.S3Util;
-import com.example.springminiproject.util.UuidGenerator;
+import com.example.springminiproject.util.UuidGenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.tomcat.websocket.server.WsWriteTimeout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -26,12 +27,12 @@ import java.io.InputStream;
 public class S3FileServiceImpl implements S3FileService {
 
     private final S3Client s3Client;
-    public S3Util s3Util;
-    public MultipartFileHelperUtil multipartFileHelperUtil;
-    public UuidGenerator uuidGenerator;
+    private final S3Util s3Util;
+    private final MultipartFileHelperUtil multipartFileHelperUtil;
+    private final UuidGenUtil uuidGenUtil;
 
-    @Value("${rustfs.bucket.name}")
-    private String bucketName;
+    @Value("${RUSTFS_BUCKET_NAME}")
+    private  String bucketName;
 
     @SneakyThrows
     @Override
@@ -39,7 +40,7 @@ public class S3FileServiceImpl implements S3FileService {
 
         s3Util.createBucketIfNotExists(bucketName);
 
-        String fileName = uuidGenerator.getFileRandomUUID(multipartFileHelperUtil.getUploadFileName(file));
+        String fileName = uuidGenUtil.getFileRandomUUID(multipartFileHelperUtil.getUploadFileName(file));
         String contentType = multipartFileHelperUtil.getContentType(file);
 
 

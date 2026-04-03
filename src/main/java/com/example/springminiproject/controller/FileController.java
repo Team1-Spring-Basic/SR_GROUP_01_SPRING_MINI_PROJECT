@@ -12,14 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.File;
 import java.time.Instant;
 
 @RestController
 @RequestMapping("api/v1/files")
 @RequiredArgsConstructor
-public class S3FileController {
+public class FileController {
 
     private final S3FileService s3FileService;
 

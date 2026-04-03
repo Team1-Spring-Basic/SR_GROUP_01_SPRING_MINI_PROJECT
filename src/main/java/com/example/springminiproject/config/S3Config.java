@@ -18,13 +18,13 @@ import java.net.URI;
 @Configuration
 public class S3Config {
 
-    @Value("${rustfs.url}")
+    @Value("${RUSTFS_URL}")
     private String endpoint;
 
-    @Value("${rustfs.access.name}")
+    @Value("${RUSTFS_ACCESS_NAME}")
     private String accessKey;
 
-    @Value("${rustfs.access.secret}")
+    @Value("${RUSTFS_ACCESS_SECRET}")
     private String secretKey;
 
     @Bean
