@@ -1,6 +1,6 @@
 package com.example.springminiproject.model.enumation;
 
-public enum HabitLOgStatus {
+public enum HabitLogStatus {
     COMPLETED,
     VERIFIED,
     CANCELLED,
