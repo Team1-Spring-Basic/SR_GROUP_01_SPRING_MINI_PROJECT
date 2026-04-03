@@ -1,5 +1,6 @@
 package com.example.springminiproject.service.serviceImpl;
 
+import com.example.springminiproject.exception.NotFoundException;
 import com.example.springminiproject.model.entity.HabitLog;
 import com.example.springminiproject.repository.HabitLogRepository;
 import com.example.springminiproject.service.HabitLogService;
@@ -16,6 +17,14 @@ public class HabitLogServiceImpl implements HabitLogService {
 
     @Override
     public HabitLog getHabitLogById(UUID habitLogId) {
-        return habitLogRepository.getHabitLogById(habitLogId);
+
+        HabitLog habitLog = habitLogRepository.getHabitLogById(habitLogId);
+        if (habitLog == null) {
+            throw new NotFoundException(
+                    String.format("HabitLog with id %s not found", habitLogId)
+            );
+        }
+
+        return habitLog;
     }
 }
