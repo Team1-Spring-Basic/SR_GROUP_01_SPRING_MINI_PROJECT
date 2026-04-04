@@ -1,6 +1,5 @@
 package com.example.springminiproject.model.request;
 
-import com.example.springminiproject.model.enumation.HabitLogStatus;
 import com.example.springminiproject.model.enumation.HabitStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.models.examples.Example;
