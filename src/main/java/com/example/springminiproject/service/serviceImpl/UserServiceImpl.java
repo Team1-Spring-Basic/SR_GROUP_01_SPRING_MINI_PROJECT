@@ -1,6 +1,6 @@
 package com.example.springminiproject.service.serviceImpl;
 
-import com.example.springminiproject.model.entity.AppUser;
+import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.request.AppUserRequest;
 import com.example.springminiproject.repository.UserRepository;
 import com.example.springminiproject.service.UserService;
@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser user = userRepository.getUserByIdentifier(username);
+    public AppUserResponse loadUserByUsername(String username) throws UsernameNotFoundException {
+        AppUserResponse user = userRepository.getUserByIdentifier(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser saveUser(AppUserRequest request) {
+    public AppUserResponse saveUser(AppUserRequest request) {
         return userRepository.saveUser(request);
     }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser getUserByIdentifier(String identifier) {
+    public AppUserResponse getUserByIdentifier(String identifier) {
         return userRepository.getUserByIdentifier(identifier);
     }
 

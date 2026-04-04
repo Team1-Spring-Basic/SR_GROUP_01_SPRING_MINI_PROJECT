@@ -1,6 +1,6 @@
 package com.example.springminiproject.repository;
 
-import com.example.springminiproject.model.entity.AppUser;
+import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.request.AppUserRequest;
 import org.apache.ibatis.annotations.*;
 
@@ -16,7 +16,7 @@ public interface UserRepository {
     @Select("""
        SELECT * from app_users where email = #{username};
     """)
-    AppUser getUserByUsername(String username);
+    AppUserResponse getUserByUsername(String username);
 
     @ResultMap("userMapper")
     @Select("""
@@ -25,7 +25,7 @@ public interface UserRepository {
                                      #{req.profileImageUrl}, 'empty')
        returning *;
     """)
-    AppUser saveUser(@Param("req") AppUserRequest request);
+    AppUserResponse saveUser(@Param("req") AppUserRequest request);
 
     @Select("""
        SELECT exists(SELECT * from app_users where username = #{username});
@@ -44,7 +44,7 @@ public interface UserRepository {
 
     @ResultMap("userMapper")
     @Select("SELECT * from app_users where username = #{identifier} or email = #{identifier}")
-    AppUser getUserByIdentifier(String identifier);
+    AppUserResponse getUserByIdentifier(String identifier);
 
     @Select("""
         UPDATE app_users
