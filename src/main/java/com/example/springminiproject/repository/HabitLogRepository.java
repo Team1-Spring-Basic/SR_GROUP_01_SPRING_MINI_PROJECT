@@ -71,6 +71,7 @@ public interface HabitLogRepository {
         INSERT INTO habit_logs (habit_id, status)
         VALUES (#{habitId}, #{status})
     """)
+    @Options(useGeneratedKeys = true, keyProperty = "habitLogId", keyColumn = "habit_log_id")
     void insertHabitLog(HabitLogRequest request);
 
     @Update("""
