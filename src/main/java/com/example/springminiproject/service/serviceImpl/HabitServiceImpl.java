@@ -27,7 +27,7 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Habit createHabit(AppUserResponse userResponse, HabitRequest habitRequest) {
         UUID createdHabitId = habitRepository.createHabit(userResponse, habitRequest).getHabitId();
-        return   habitRepository.getHabitById(userResponse, createdHabitId);
+        return habitRepository.getHabitById(userResponse, createdHabitId);
 
 
     }
