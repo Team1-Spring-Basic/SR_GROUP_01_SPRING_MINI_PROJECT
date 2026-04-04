@@ -1,7 +1,10 @@
 package com.example.springminiproject.controller;
 
+import com.example.springminiproject.exception.NotFoundException;
 import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.entity.Habit;
+import com.example.springminiproject.model.entity.HabitLog;
+import com.example.springminiproject.model.enumation.ApiStatus;
 import com.example.springminiproject.model.request.HabitRequest;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.HabitService;
@@ -13,10 +16,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,6 +75,59 @@ public class HabitController {
                 .payload(habitService.getHabitById(userResponse,habitId))
                 .timestamp(java.time.Instant.now())
                 .build();
-        return ResponseEntity.ok(response);}
+        return ResponseEntity.ok(response);
+    }
 
+    @PutMapping("/{habit-id}")
+    public ResponseEntity<ApiResponse<Habit>> updateHabitById(
+            @PathVariable("habit-id") UUID habitId,
+            @RequestBody HabitRequest habitRequest) {
+
+        try {
+            Habit habit = habitService.updateHabitById(habitId, habitRequest);
+
+            ApiResponse<Habit> response = ApiResponse.<Habit>builder()
+                    .isSuccess(true)
+                    .message("Update Habit by Id Successfully")
+                    .payload(habit)
+                    .timestamp(java.time.Instant.now())
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (NotFoundException e){
+            ApiResponse<Habit> response = ApiResponse.<Habit>builder()
+                    .isSuccess(false)
+                    .status(String.valueOf(ApiStatus.NOT_FOUND))
+                    .message(e.getMessage())
+                    .payload(null)
+                    .timestamp(Instant.now())
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @DeleteMapping("/{habit-id}")
+    public ResponseEntity<ApiResponse<Habit>> deleteHabitById(@PathVariable("habit-id") UUID habitId) {
+        try {
+            Habit habit = habitService.deleteHabitById(habitId);
+
+            ApiResponse<Habit> response = ApiResponse.<Habit>builder()
+                    .isSuccess(true)
+                    .message("Delete Habit by Id Successfully")
+                    .payload(habit)
+                    .timestamp(java.time.Instant.now())
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (NotFoundException e){
+            ApiResponse<Habit> response = ApiResponse.<Habit>builder()
+                    .isSuccess(false)
+                    .status(String.valueOf(ApiStatus.NOT_FOUND))
+                    .message(e.getMessage())
+                    .payload(null)
+                    .timestamp(Instant.now())
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
