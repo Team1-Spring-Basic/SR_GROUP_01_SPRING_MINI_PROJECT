@@ -10,11 +10,10 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppUser {
+public class AppUserResponse {
     private UUID appUserId;
     private String username;
     private String email;
-    private String password;
     private Integer level;
     private Integer xp;
     private String profileImageUrl;
