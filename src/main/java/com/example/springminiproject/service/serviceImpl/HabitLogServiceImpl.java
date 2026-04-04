@@ -43,7 +43,6 @@ public class HabitLogServiceImpl implements HabitLogService {
 
         return habitLogRepository.getHabitLogById(request.getHabitLogId());
     }
-
     private void updateXpAndLevel(AppUserResponse user) {
         int newXp = user.getXp() + 10;
         int newLevel = user.getLevel();
