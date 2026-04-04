@@ -1,7 +1,7 @@
 package com.example.springminiproject.service.serviceImpl;
 
 import com.example.springminiproject.exception.*;
-import com.example.springminiproject.model.entity.AppUser;
+import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.request.AppUserRequest;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public AppUser register(RegisterRequest request) {
+    public AppUserResponse register(RegisterRequest request) {
         AppUserRequest userRequest = AppUserRequest.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictException("Email already exists");
         }
 
-        AppUser newUser = userService.saveUser(userRequest);
+        AppUserResponse newUser = userService.saveUser(userRequest);
 
         mailService.sendEmail(newUser.getEmail());
 

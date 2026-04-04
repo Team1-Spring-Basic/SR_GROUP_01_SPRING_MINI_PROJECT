@@ -1,6 +1,6 @@
 package com.example.springminiproject.controller;
 
-import com.example.springminiproject.model.entity.AppUser;
+import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
 import com.example.springminiproject.model.response.ApiResponse;
@@ -28,11 +28,11 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<AppUser>> register(@Valid @RequestBody RegisterRequest credentials){
+    public ResponseEntity<ApiResponse<AppUserResponse>> register(@Valid @RequestBody RegisterRequest credentials){
 
-        ApiResponse<AppUser> response = ApiResponse.<AppUser>builder()
+        ApiResponse<AppUserResponse> response = ApiResponse.<AppUserResponse>builder()
                 .isSuccess(true)
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.CREATED.name())
                 .message("User registered successfully! Please verify your email to complete the registration.")
                 .payload(authService.register(credentials))
                 .timestamp(Instant.now())
@@ -49,7 +49,7 @@ public class AuthController {
 
         ApiResponse<String> response = ApiResponse.<String>builder()
                 .isSuccess(true)
-                .status(HttpStatus.OK)
+                .status(HttpStatus.OK.name())
                 .message("Login successful! Authentication token generated.")
                 .payload(token)
                 .timestamp(Instant.now())
@@ -71,7 +71,7 @@ public class AuthController {
 
         ApiResponse<Void> response = ApiResponse.<Void>builder()
                 .isSuccess(true)
-                .status(HttpStatus.OK)
+                .status(HttpStatus.OK.name())
                 .message("Email successfully verified! You can now log in.")
                 .payload(null)
                 .timestamp(Instant.now())
