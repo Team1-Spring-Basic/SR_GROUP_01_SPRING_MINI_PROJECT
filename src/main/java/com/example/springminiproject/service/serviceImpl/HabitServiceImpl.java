@@ -41,4 +41,23 @@ public class HabitServiceImpl implements HabitService {
         }
         return habit;
     }
+
+    @Override
+    public Habit updateHabitById(UUID habitId, HabitRequest habitRequest) {
+
+        if (habitId == null) {
+            throw  new NotFoundException("Habit id not found");
+        }
+
+        return habitRepository.updateHabitById(habitId, habitRequest);
+    }
+
+    @Override
+    public Habit deleteHabitById(UUID habitId) {
+
+        if (habitId == null) {
+            throw  new NotFoundException("Habit id not found");
+        }
+        return habitRepository.deleteHabitById(habitId);
+    }
 }

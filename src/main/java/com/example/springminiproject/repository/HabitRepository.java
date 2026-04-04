@@ -101,6 +101,21 @@ public interface HabitRepository {
     RETURNING *;
 """)
     Habit createHabit( @Param("req1")AppUserResponse userResponse,@Param("req") HabitRequest habitRequest);
+
+    @ResultMap("habitResultMap")
+    @Select("""
+        UPDATE habits SET title=#{req.title}, description=#{req.description}, frequency=#{req.frequency}
+            WHERE habit_id=#{habitId}
+            RETURNING *
+    """)
+    Habit updateHabitById(UUID habitId,@Param("req") HabitRequest habitRequest);
+
+
+    @ResultMap("habitResultMap")
+    @Select("""
+        DELETE FROM habits WHERE habit_id=#{habitId} 
+    """)
+    Habit deleteHabitById(UUID habitId);
 }
 
 
