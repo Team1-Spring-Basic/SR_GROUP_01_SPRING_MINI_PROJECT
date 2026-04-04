@@ -6,6 +6,9 @@ import com.example.springminiproject.model.enumation.ApiStatus;
 import com.example.springminiproject.model.request.HabitLogRequest;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.HabitLogService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/hobit-logs")
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
+@SecurityRequirement(name = "bearerAuth")
 public class HabitLogController {
 
     private final HabitLogService habitLogService;
@@ -30,7 +35,7 @@ public class HabitLogController {
 
             ApiResponse<HabitLog> response = ApiResponse.<HabitLog>builder()
                     .isSuccess(true)
-                    .status(String.valueOf(ApiStatus.OK))
+                    .status(HttpStatus.OK.name())
                     .message("Get HabitLog By ID Successfully")
                     .payload(habitLog)
                     .timestamp(Instant.now()).build();
@@ -39,7 +44,7 @@ public class HabitLogController {
         } catch (NotFoundException e){
             ApiResponse<HabitLog> response = ApiResponse.<HabitLog>builder()
                     .isSuccess(false)
-                    .status(String.valueOf(ApiStatus.NOT_FOUND))
+                    .status(HttpStatus.NOT_FOUND.name())
                     .message(e.getMessage())
                     .payload(null)
                     .timestamp(Instant.now())
