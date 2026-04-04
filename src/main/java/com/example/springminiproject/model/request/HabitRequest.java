@@ -1,5 +1,7 @@
 package com.example.springminiproject.model.request;
 
+import com.example.springminiproject.model.enumation.HabitLogStatus;
+import com.example.springminiproject.model.enumation.HabitStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class HabitRequest {
     private String title;
     private String description;
-    private String frequency;
+    private HabitStatus frequency;
 }

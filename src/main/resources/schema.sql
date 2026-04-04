@@ -45,10 +45,14 @@ CREATE TABLE habits (
                         app_user_id UUID         NOT NULL REFERENCES app_users(app_user_id) ON DELETE CASCADE,
                         title       VARCHAR(100) NOT NULL,
                         description TEXT,
-                        frequency   VARCHAR(20)  NOT NULL,
+                        frequency   VARCHAR(20)  NOT NULL  CHECK (frequency IN ('DAILY', 'WEEKLY', 'MONTHLY')),
                         is_active   BOOLEAN      NOT NULL DEFAULT TRUE,
                         created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
+
+-- ALTER TABLE habits
+--     ALTER COLUMN frequency TYPE VARCHAR(20),
+--     ADD CONSTRAINT chk_frequency CHECK (frequency IN ('DAILY', 'WEEKLY', 'MONTHLY'));
 
 
 CREATE TABLE habit_logs (
@@ -56,8 +60,7 @@ CREATE TABLE habit_logs (
                             habit_id     UUID        NOT NULL REFERENCES habits(habit_id) ON DELETE CASCADE,
                             log_date     DATE        NOT NULL DEFAULT CURRENT_DATE,
                             status       VARCHAR(20) NOT NULL,
-                            xp_earned    INT         NOT NULL DEFAULT 0,
-                            UNIQUE (habit_id, log_date)
+                            xp_earned    INT         NOT NULL DEFAULT 0
 );
 
 
