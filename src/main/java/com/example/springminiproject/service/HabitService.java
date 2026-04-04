@@ -13,4 +13,8 @@ public interface HabitService {
     Habit createHabit(AppUserResponse userResponse, HabitRequest habit);
 
     Habit getHabitById(AppUserResponse userResponse, UUID habitId);
+
+    Habit updateHabitById(UUID habitId, HabitRequest habitRequest);
+
+    Habit deleteHabitById(UUID habitId);
 }
