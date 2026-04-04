@@ -61,7 +61,7 @@ public class HabitLogController {
             HabitLog habitLog = habitLogService.createHabitLog(request);
             ApiResponse<HabitLog> response = ApiResponse.<HabitLog>builder()
                     .isSuccess(true)
-                    .status(String.valueOf(ApiStatus.CREATED))
+                    .status(HttpStatus.CONTINUE.name())
                     .message("Create HabitLog By ID Successfully")
                     .payload(habitLog)
                     .timestamp(Instant.now()).build();
