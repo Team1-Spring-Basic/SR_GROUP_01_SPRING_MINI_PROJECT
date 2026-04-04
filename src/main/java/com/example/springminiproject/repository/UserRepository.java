@@ -5,13 +5,11 @@ import com.example.springminiproject.model.request.AppUserRequest;
 import com.example.springminiproject.util.UuidTypeHandler;
 import org.apache.ibatis.annotations.*;
 
-
 @Mapper
 public interface UserRepository {
 
     @Results(id = "userMapper", value={
-        @Result(property = "appUserId",
-                typeHandler = UuidTypeHandler.class, column = "app_user_id"),
+        @Result(property = "appUserId", column = "app_user_id", typeHandler = UuidTypeHandler.class),
         @Result(property = "profileImageUrl", column = "profile_image"),
         @Result(property = "isVerified", column = "is_verified"),
         @Result(property = "createdAt", column = "created_at"),

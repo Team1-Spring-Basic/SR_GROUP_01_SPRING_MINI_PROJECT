@@ -1,6 +1,6 @@
 package com.example.springminiproject.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +21,7 @@ public class AppUserResponse implements UserDetails {
     private UUID appUserId;
     private String username;
     private String email;
+    @JsonIgnore
     private String password;
     private Integer level;
     private Integer xp;
