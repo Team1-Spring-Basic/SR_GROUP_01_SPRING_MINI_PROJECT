@@ -1,0 +1,11 @@
+RUSTFS_ACCESS_KEY=
+RUSTFS_SECRET_KEY=
+
+RUSTFS_URL=http://localhost:port
+RUSTFS_ACCESS_NAME=
+RUSTFS_ACCESS_SECRET=
+RUSTFS_BUCKET_NAME=
+
+DB_URL=jdbc:postgresql://localhost:port/dbname
+DB_USERNAME=
+DB_Password=
