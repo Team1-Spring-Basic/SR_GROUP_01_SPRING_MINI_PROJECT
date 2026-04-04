@@ -16,7 +16,7 @@ import java.time.Instant;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
     private Boolean isSuccess;
-    private HttpStatus status;
+    private String status;
     private String message;
     private T payload;
     private Instant timestamp;

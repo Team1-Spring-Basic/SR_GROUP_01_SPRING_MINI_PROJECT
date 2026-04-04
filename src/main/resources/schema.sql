@@ -57,7 +57,7 @@ CREATE TABLE habit_logs (
                             log_date     DATE        NOT NULL DEFAULT CURRENT_DATE,
                             status       VARCHAR(20) NOT NULL,
                             xp_earned    INT         NOT NULL DEFAULT 0,
-                            UNIQUE (habit_id, log_date)
+
 );
 
 
@@ -110,3 +110,4 @@ CREATE INDEX idx_user_roles_role     ON app_user_roles(role_id);
 --
 -- WHERE hl.habit_log_id = '0cd85efb-2136-401e-8879-16a2c4c56ea1';
 --
+ALTER TABLE habit_logs DROP CONSTRAINT habit_logs_habit_id_log_date_key;
