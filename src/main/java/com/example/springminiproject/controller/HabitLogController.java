@@ -4,6 +4,10 @@ import com.example.springminiproject.exception.NotFoundException;
 import com.example.springminiproject.model.entity.HabitLog;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.HabitLogService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,8 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/hobit-logs")
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
+@SecurityRequirement(name = "bearerAuth")
 public class HabitLogController {
 
     private final HabitLogService habitLogService;

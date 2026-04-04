@@ -15,7 +15,6 @@ import java.util.Date;
 @Setter
 public class JwtUtils {
     private String secret;
-    private Long expiration;
 
     public SecretKey getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -26,7 +25,7 @@ public class JwtUtils {
                 .signWith(getKey())
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .compact();
     }
 
@@ -45,7 +44,8 @@ public class JwtUtils {
     public Boolean validateToken(String token) {
         try{
             Claims claims = parseToken(token);
-            return !claims.getExpiration().before(new Date());
+            boolean expired = claims.getExpiration().before(new Date());
+            return !expired;
         }catch (Exception e){
             return false;
         }
