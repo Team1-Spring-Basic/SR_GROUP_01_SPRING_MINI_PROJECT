@@ -5,11 +5,11 @@ INSERT INTO app_roles (role_id, name) VALUES
 -- ─────────────────────────────────────────
 -- Users (password = bcrypt of "password123")
 -- ─────────────────────────────────────────
-INSERT INTO app_users (app_user_id, username, full_name, email, password, level, xp, is_verified) VALUES
-                                                                                                      ('550e8400-0001-0000-0000-000000000001', 'sokha_dev',    'Sok Sokha',     'sokha@example.com',    '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 3, 1200, TRUE),
-                                                                                                      ('550e8400-0001-0000-0000-000000000002', 'dara_codes',   'Pich Dara',     'dara@example.com',     '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 2, 450,  TRUE),
-                                                                                                      ('550e8400-0001-0000-0000-000000000003', 'admin_youlong', 'You Long',     'youlong@example.com',  '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 5, 3800, TRUE),
-                                                                                                      ('550e8400-0001-0000-0000-000000000004', 'channary_h',   'Chan Channary', 'channary@example.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 1, 80,   FALSE);
+INSERT INTO app_users (app_user_id, username, email, password, level, xp, is_verified) VALUES
+                                                                                                      ('550e8400-0001-0000-0000-000000000001', 'sokha_dev', 'sokha@example.com',    '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 3, 1200, TRUE),
+                                                                                                      ('550e8400-0001-0000-0000-000000000002', 'dara_codes', 'dara@example.com',     '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 2, 450,  TRUE),
+                                                                                                      ('550e8400-0001-0000-0000-000000000003', 'admin_youlong', 'youlong@example.com',  '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 5, 3800, TRUE),
+                                                                                                      ('550e8400-0001-0000-0000-000000000004', 'channary_h', 'channary@example.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 1, 80,   FALSE);
 
 
 INSERT INTO app_user_roles (app_user_id, role_id) VALUES
