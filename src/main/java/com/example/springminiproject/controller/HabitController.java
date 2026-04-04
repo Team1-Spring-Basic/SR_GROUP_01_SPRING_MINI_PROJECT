@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -47,7 +48,7 @@ public class HabitController {
 
     @PostMapping
     @Operation(summary = "Create a new habit")
-    public ResponseEntity<ApiResponse<Habit>> createHabit(@AuthenticationPrincipal AppUserResponse userResponse, @RequestBody HabitRequest habitRequest) {
+    public ResponseEntity<ApiResponse<Habit>> createHabit(@AuthenticationPrincipal AppUserResponse userResponse, @Valid  @RequestBody HabitRequest habitRequest) {
 
         Habit createdHabit = habitService.createHabit(userResponse, habitRequest);
         ApiResponse<Habit> response = ApiResponse.<Habit>builder()
