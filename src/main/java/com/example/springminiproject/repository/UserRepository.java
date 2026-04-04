@@ -2,13 +2,14 @@ package com.example.springminiproject.repository;
 
 import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.request.AppUserRequest;
+import com.example.springminiproject.util.UuidTypeHandler;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserRepository {
 
     @Results(id = "userMapper", value={
-        @Result(property = "appUserId", column = "app_user_id"),
+        @Result(property = "appUserId", column = "app_user_id", typeHandler = UuidTypeHandler.class),
         @Result(property = "profileImageUrl", column = "profile_image"),
         @Result(property = "isVerified", column = "is_verified"),
         @Result(property = "createdAt", column = "created_at"),
@@ -20,9 +21,9 @@ public interface UserRepository {
 
     @ResultMap("userMapper")
     @Select("""
-       INSERT INTO app_users(username, email, password, profile_image, full_name) values (#{req.username},
+       INSERT INTO app_users(username, email, password, profile_image) values (#{req.username},
                                      #{req.email}, #{req.password},
-                                     #{req.profileImageUrl}, 'empty')
+                                     #{req.profileImageUrl})
        returning *;
     """)
     AppUserResponse saveUser(@Param("req") AppUserRequest request);
