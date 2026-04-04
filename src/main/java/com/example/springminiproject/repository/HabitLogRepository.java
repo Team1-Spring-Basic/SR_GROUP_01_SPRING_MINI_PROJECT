@@ -1,6 +1,7 @@
 package com.example.springminiproject.repository;
 
 import com.example.springminiproject.model.entity.HabitLog;
+import com.example.springminiproject.model.request.HabitLogRequest;
 import com.example.springminiproject.util.UuidTypeHandler;
 import org.apache.ibatis.annotations.*;
 
@@ -65,4 +66,18 @@ public interface HabitLogRepository {
         WHERE hl.habit_log_id = #{habitLogId}
     """)
     HabitLog getHabitLogById(UUID habitLogId);
+
+    @Insert("""
+        INSERT INTO habit_logs (habit_id, status)
+        VALUES (#{habitId}, #{status})
+    """)
+    void insertHabitLog(HabitLogRequest request);
+
+    @Update("""
+        UPDATE app_users
+        SET xp    = #{xp},
+            level = #{level}
+        WHERE app_user_id = #{appUserId}
+    """)
+    void updateXpAndLevel(UUID appUserId, Integer xp, Integer level);
 }
