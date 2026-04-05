@@ -1,12 +1,16 @@
 package com.example.springminiproject.service.serviceImpl;
 
+import com.example.springminiproject.exception.NotFoundException;
 import com.example.springminiproject.model.entity.FileMetaData;
 import com.example.springminiproject.service.S3FileService;
 import com.example.springminiproject.util.MultipartFileHelperUtil;
 import com.example.springminiproject.util.S3Util;
 import com.example.springminiproject.util.UuidGenUtil;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.coyote.BadRequestException;
 import org.apache.tomcat.websocket.server.WsWriteTimeout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.InputStream;
@@ -70,12 +75,16 @@ public class S3FileServiceImpl implements S3FileService {
     }
 
     @Override
-    public Resource getFileByFileName(String fileName) {
-        InputStream inputStream = s3Client.getObject(
-                GetObjectRequest.builder()
-                        .bucket(bucketName)
-                        .key(fileName)
-                        .build());
-        return new InputStreamResource(inputStream);
+    public Resource getFileByFileName(String fileName){
+        try{
+            InputStream inputStream = s3Client.getObject(
+                    GetObjectRequest.builder()
+                            .bucket(bucketName)
+                            .key(fileName)
+                            .build());
+            return new InputStreamResource(inputStream);
+        }catch (NoSuchKeyException e) {
+            throw new NotFoundException( "File '" + fileName + "' not found in S3 bucket");
+        }
     }
 }
