@@ -24,6 +24,8 @@ services:
       - redis_data:/data
     command: redis-server --appendonly yes
 
+#to be include rustfs docker compose
+
 volumes:
   postgres_data:
   redis_data:
