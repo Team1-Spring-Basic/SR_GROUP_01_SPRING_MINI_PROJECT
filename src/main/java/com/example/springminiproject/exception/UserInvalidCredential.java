@@ -1,7 +1,7 @@
 package com.example.springminiproject.exception;
 
 public class UserInvalidCredential extends RuntimeException{
-    public UserInvalidCredential(String message) {
-        super(message);
+    public UserInvalidCredential() {
+        super("Authentication required or token is invalid");
     }
 }
