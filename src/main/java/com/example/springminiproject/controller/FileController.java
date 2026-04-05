@@ -5,6 +5,7 @@ import com.example.springminiproject.model.entity.FileMetaData;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.S3FileService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +37,7 @@ public class FileController {
     }
 
     @GetMapping("/preview-file/{file-name}")
-    public ResponseEntity<Resource> getFileName(@PathVariable("file-name") String fileName){
+    public ResponseEntity<Resource> getFileName(@PathVariable("file-name") String fileName) throws BadRequestException {
         Resource resource = s3FileService.getFileByFileName(fileName);
 
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.IMAGE_JPEG).body(resource);
