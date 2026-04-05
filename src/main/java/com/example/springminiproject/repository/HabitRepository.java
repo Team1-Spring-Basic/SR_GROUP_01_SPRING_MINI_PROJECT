@@ -1,6 +1,6 @@
 package com.example.springminiproject.repository;
 
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.entity.AppUser;
 import com.example.springminiproject.model.entity.Habit;
 import com.example.springminiproject.model.request.HabitRequest;
 import com.example.springminiproject.util.UuidTypeHandler;
@@ -51,7 +51,7 @@ public interface HabitRepository {
         limit #{size} offset #{offset}
 """
     )
-    List<Habit> getAllHabits(@Param("size") int size, @Param("offset") int offset, @Param("reg") AppUserResponse appUserResponse);
+    List<Habit> getAllHabits(@Param("size") int size, @Param("offset") int offset, @Param("reg") AppUser user);
 
 
 
@@ -80,7 +80,7 @@ public interface HabitRepository {
     
 """
     )
-    Habit getHabitById(@Param("reg") AppUserResponse userResponse, UUID habitId);
+    Habit getHabitById(@Param("reg") AppUser userResponse, UUID habitId);
 
 
 
@@ -91,7 +91,7 @@ public interface HabitRepository {
 //        habits
 //        WHERE app_user_id = #{reg.appUserId};
 //""")
-//    UUID getHabitIdByUserId(@Param("reg" ) AppUserResponse userResponse);
+//    UUID getHabitIdByUserId(@Param("reg" ) AppUser userResponse);
 
 
     @ResultMap("habitResultMap")
@@ -100,11 +100,11 @@ public interface HabitRepository {
     VALUES (#{req.title}, #{req.description}, #{req.frequency}, #{req1.appUserId})
     RETURNING *;
 """)
-    Habit createHabit( @Param("req1")AppUserResponse userResponse,@Param("req") HabitRequest habitRequest);
+    Habit createHabit( @Param("req1")AppUser userResponse,@Param("req") HabitRequest habitRequest);
 
     @ResultMap("habitResultMap")
     @Select("""
-        UPDATE habits SET title=#{req.title}, description=#{req.description}, frequency=#{req.frequency}
+        UPDATE habits SET title = #{req.title}, description = #{req.description}, frequency = #{req.frequency}
             WHERE habit_id=#{habitId}
             RETURNING *
     """)
@@ -113,7 +113,7 @@ public interface HabitRepository {
 
     @ResultMap("habitResultMap")
     @Select("""
-        DELETE FROM habits WHERE habit_id=#{habitId} 
+        DELETE FROM habits WHERE habit_id=#{habitId}
     """)
     Habit deleteHabitById(UUID habitId);
 }

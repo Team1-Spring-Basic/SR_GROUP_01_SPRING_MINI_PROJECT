@@ -1,11 +1,11 @@
 package com.example.springminiproject.controller;
 
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.AuthService;
-import com.example.springminiproject.service.serviceImpl.MailService;
+import com.example.springminiproject.service.serviceImpl.MailServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import java.time.Instant;
 public class AuthController {
 
     private final AuthService authService;
-    private final MailService mailService;
+    private final MailServiceImpl mailService;
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")

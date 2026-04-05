@@ -1,9 +1,8 @@
 package com.example.springminiproject.controller;
 
 import com.example.springminiproject.exception.NotFoundException;
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.entity.AppUser;
 import com.example.springminiproject.model.entity.Habit;
-import com.example.springminiproject.model.entity.HabitLog;
 import com.example.springminiproject.model.enumation.ApiStatus;
 import com.example.springminiproject.model.request.HabitRequest;
 import com.example.springminiproject.model.response.ApiResponse;
@@ -15,7 +14,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,10 +34,10 @@ public class HabitController {
 
     @GetMapping
     @Operation(summary = "Get All Habits")
-    public ResponseEntity<ApiResponse<List<Habit>>> getAllHabit(@AuthenticationPrincipal AppUserResponse userResponse,
+    public ResponseEntity<ApiResponse<List<Habit>>> getAllHabit(@AuthenticationPrincipal AppUser user,
             @RequestParam(defaultValue = "1") @Positive(message = "page must be greater than 0") Integer page, @RequestParam(defaultValue = "10") @Positive(message = "size must be greater than 0") Integer size) {
 
-        List<Habit> habits = habitService.getAllHabits(page, size, userResponse);
+        List<Habit> habits = habitService.getAllHabits(page, size, user);
         ApiResponse<List<Habit>> response = ApiResponse.<List<Habit>>builder()
                 .isSuccess(true)
                 .message("Habits retrieved successfully")
@@ -53,9 +51,9 @@ public class HabitController {
 
     @PostMapping
     @Operation(summary = "Create a new habit")
-    public ResponseEntity<ApiResponse<Habit>> createHabit(@AuthenticationPrincipal AppUserResponse userResponse, @Valid  @RequestBody HabitRequest habitRequest) {
+    public ResponseEntity<ApiResponse<Habit>> createHabit(@AuthenticationPrincipal AppUser user, @Valid  @RequestBody HabitRequest habitRequest) {
 
-        Habit createdHabit = habitService.createHabit(userResponse, habitRequest);
+        Habit createdHabit = habitService.createHabit(user, habitRequest);
         ApiResponse<Habit> response = ApiResponse.<Habit>builder()
                 .isSuccess(true)
                 .message("Habit created successfully")
@@ -67,12 +65,12 @@ public class HabitController {
 
     @GetMapping("/{habit-id}")
     @Operation(summary = "Get habit by ID")
-    public ResponseEntity<ApiResponse<Habit>> getHabitById(@AuthenticationPrincipal AppUserResponse userResponse, @PathVariable("habit-id") UUID habitId) {
+    public ResponseEntity<ApiResponse<Habit>> getHabitById(@AuthenticationPrincipal AppUser user, @PathVariable("habit-id") UUID habitId) {
         ApiResponse<Habit> response = ApiResponse.<Habit>builder()
                 .isSuccess(true)
                 .message("Habit retrieved successfully")
                 .status("success")
-                .payload(habitService.getHabitById(userResponse,habitId))
+                .payload(habitService.getHabitById(user,habitId))
                 .timestamp(java.time.Instant.now())
                 .build();
         return ResponseEntity.ok(response);

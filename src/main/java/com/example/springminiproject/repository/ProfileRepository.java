@@ -1,6 +1,6 @@
 package com.example.springminiproject.repository;
 
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.entity.AppUser;
 import com.example.springminiproject.model.request.ProfileRequest;
 import com.example.springminiproject.util.UuidTypeHandler;
 import org.apache.ibatis.annotations.*;
@@ -23,13 +23,13 @@ public interface ProfileRepository {
     @Select("""
         select * from app_users where app_user_id=#{currentUserId};
     """)
-    AppUserResponse getUser(UUID currentUserId);
+    AppUser getUser(UUID currentUserId);
 
     @ResultMap("ProfileMapper")
     @Select("""
         update app_users set username = #{req.username}, profile_image = #{req.profileImageUrl} where app_user_id=#{currentUserId} returning *;
     """)
-    AppUserResponse updateUser(UUID currentUserId, @Param("req") ProfileRequest request);
+    AppUser updateUser(UUID currentUserId, @Param("req") ProfileRequest request);
 
 
     @ResultMap("ProfileMapper")

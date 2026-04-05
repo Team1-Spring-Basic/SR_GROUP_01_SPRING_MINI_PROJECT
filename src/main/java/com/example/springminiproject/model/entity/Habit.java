@@ -1,5 +1,6 @@
 package com.example.springminiproject.model.entity;
 
+import com.example.springminiproject.model.response.AppUserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
