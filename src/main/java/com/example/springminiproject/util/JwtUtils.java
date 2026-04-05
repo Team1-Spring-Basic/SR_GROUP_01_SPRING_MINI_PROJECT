@@ -25,7 +25,7 @@ public class JwtUtils {
                 .signWith(getKey())
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
                 .compact();
     }
 
