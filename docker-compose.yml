@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   db:
@@ -13,6 +12,8 @@ services:
       - "5555:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rustfs-network
 
   redis:
     image: redis:7-alpine
@@ -23,9 +24,74 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    networks:
+      - rustfs-network
 
-#to be include rustfs docker compose
+  # Fixes ownership of RustFS volumes before the server starts (UID 10001)
+  volume-permission-helper:
+    image: alpine
+    volumes:
+      - rustfs_data_0:/data0
+      - rustfs_data_1:/data1
+      - rustfs_data_2:/data2
+      - rustfs_data_3:/data3
+      - logs:/logs
+    command: >
+      sh -c "
+        chown -R 10001:10001 /data0 /data1 /data2 /data3 /logs &&
+        echo 'Volume permissions fixed' &&
+        exit 0
+      "
+    restart: "no"
+    networks:
+      - rustfs-network
+
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: rustfs-server
+    restart: unless-stopped
+    depends_on:
+      volume-permission-helper:
+        condition: service_completed_successfully
+    security_opt:
+      - "no-new-privileges:true"
+    ports:
+      - "9078:9000"   # S3 API
+      - "9079:9001"   # Web console
+    environment:
+      - RUSTFS_ADDRESS=0.0.0.0:9000
+      - RUSTFS_CONSOLE_ADDRESS=0.0.0.0:9001
+      - RUSTFS_CONSOLE_ENABLE=true
+      - RUSTFS_VOLUMES=/data0,/data1,/data2,/data3
+      - RUSTFS_ACCESS_KEY=rustfsadmin
+      - RUSTFS_SECRET_KEY=ChangeMe123!
+      - RUSTFS_REGION=us-east-1
+      - RUSTFS_OBS_LOGGER_LEVEL=info
+      - RUSTFS_OBS_LOG_DIRECTORY=/logs
+      - RUSTFS_CORS_ALLOWED_ORIGINS=*
+    volumes:
+      - rustfs_data_0:/data0
+      - rustfs_data_1:/data1
+      - rustfs_data_2:/data2
+      - rustfs_data_3:/data3
+      - logs:/logs
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://127.0.0.1:9000/health && curl -f http://127.0.0.1:9001/rustfs/console/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - rustfs-network
+
+networks:
+  rustfs-network:
 
 volumes:
   postgres_data:
   redis_data:
+  rustfs_data_0:
+  rustfs_data_1:
+  rustfs_data_2:
+  rustfs_data_3:
+  logs:
