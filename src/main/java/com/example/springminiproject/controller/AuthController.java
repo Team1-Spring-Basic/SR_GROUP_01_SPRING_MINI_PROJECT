@@ -4,6 +4,7 @@ import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
 import com.example.springminiproject.model.response.ApiResponse;
+import com.example.springminiproject.model.response.auth.LoginResponse;
 import com.example.springminiproject.service.AuthService;
 import com.example.springminiproject.service.serviceImpl.MailServiceImpl;
 import jakarta.validation.Valid;
@@ -42,16 +43,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginRequest credentials) throws Exception{
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest credentials) throws Exception{
 
         String token = authService.login(credentials);
         authenticate(credentials.getUsername(), credentials.getPassword());
 
-        ApiResponse<String> response = ApiResponse.<String>builder()
+        ApiResponse<LoginResponse> response = ApiResponse.<LoginResponse>builder()
                 .isSuccess(true)
                 .status(HttpStatus.OK.name())
                 .message("Login successful! Authentication token generated.")
-                .payload(token)
+                .payload(LoginResponse.builder().token(token).build())
                 .timestamp(Instant.now())
                 .build();
 
