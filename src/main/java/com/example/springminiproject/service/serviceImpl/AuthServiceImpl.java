@@ -1,7 +1,7 @@
 package com.example.springminiproject.service.serviceImpl;
 
 import com.example.springminiproject.exception.*;
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.request.AppUserRequest;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
+    private final MailServiceImpl mailService;
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
@@ -71,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
             throw new UserEmailNotVerifiedException("Your email address is not yet verified. Please verify your email before logging in.");
         }
 
-        return jwtUtils.generateToken(userService.getUserByIdentifier(credentials.getUsername()).getEmail());
+        return jwtUtils.generateToken(credentials.getUsername());
     }
 
     @Override

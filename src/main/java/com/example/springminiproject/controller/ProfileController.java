@@ -1,6 +1,7 @@
 package com.example.springminiproject.controller;
 
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.entity.AppUser;
+import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.request.ProfileRequest;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.ProfileService;
@@ -11,13 +12,10 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -32,8 +30,7 @@ public class ProfileController {
             summary = "Get user profile"
     )
     @GetMapping
-    public ResponseEntity<ApiResponse<AppUserResponse>> getUser(@AuthenticationPrincipal AppUserResponse user) {
-        System.out.println("user:"+user);
+    public ResponseEntity<ApiResponse<AppUserResponse>> getUser(@AuthenticationPrincipal AppUser user) {
         UUID currentUserId = user.getAppUserId();
         AppUserResponse result = profileService.getUser(currentUserId);
         ApiResponse<AppUserResponse> response = ApiResponse.<AppUserResponse>builder()
@@ -50,8 +47,7 @@ public class ProfileController {
             summary = "Update user profile"
     )
     @PutMapping
-    public ResponseEntity<ApiResponse<AppUserResponse>> updateUser(@AuthenticationPrincipal AppUserResponse user, @RequestBody ProfileRequest request) {
-        System.out.println("user:"+user);
+    public ResponseEntity<ApiResponse<AppUserResponse>> updateUser(@AuthenticationPrincipal AppUser user, @RequestBody ProfileRequest request) {
         UUID currentUserId = user.getAppUserId();
         AppUserResponse result = profileService.updateUser(currentUserId, request);
         ApiResponse<AppUserResponse> response = ApiResponse.<AppUserResponse>builder()
@@ -68,8 +64,7 @@ public class ProfileController {
             summary = "Delete user profile"
     )
     @DeleteMapping
-    public ResponseEntity<ApiResponse<AppUserResponse>> deleteUser(@AuthenticationPrincipal AppUserResponse user) {
-        System.out.println("user:"+user);
+    public ResponseEntity<ApiResponse<AppUserResponse>> deleteUser(@AuthenticationPrincipal AppUser user) {
         UUID currentUserId = user.getAppUserId();
         profileService.deleteUser(currentUserId);
         ApiResponse<AppUserResponse> response = ApiResponse.<AppUserResponse>builder()

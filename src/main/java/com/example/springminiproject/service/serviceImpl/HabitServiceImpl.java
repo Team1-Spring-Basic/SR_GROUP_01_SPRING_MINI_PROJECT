@@ -1,8 +1,8 @@
 package com.example.springminiproject.service.serviceImpl;
 
 import com.example.springminiproject.exception.NotFoundException;
-import com.example.springminiproject.model.entity.AppUserResponse;
 import com.example.springminiproject.model.entity.Habit;
+import com.example.springminiproject.model.entity.AppUser;
 import com.example.springminiproject.model.request.HabitRequest;
 import com.example.springminiproject.repository.HabitRepository;
 import com.example.springminiproject.service.HabitService;
@@ -19,13 +19,13 @@ public class HabitServiceImpl implements HabitService {
     private final HabitRepository habitRepository;
 
     @Override
-    public List<Habit> getAllHabits(Integer page, Integer size, AppUserResponse userResponse) {
+    public List<Habit> getAllHabits(Integer page, Integer size, AppUser userResponse) {
         int offset = (page - 1) * size;
         return habitRepository.getAllHabits(size,offset, userResponse);
     }
 
     @Override
-    public Habit createHabit(AppUserResponse userResponse, HabitRequest habitRequest) {
+    public Habit createHabit(AppUser userResponse, HabitRequest habitRequest) {
         UUID createdHabitId = habitRepository.createHabit(userResponse, habitRequest).getHabitId();
         return habitRepository.getHabitById(userResponse, createdHabitId);
 
@@ -33,7 +33,7 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public Habit getHabitById(AppUserResponse userResponse, UUID habitId) {
+    public Habit getHabitById(AppUser userResponse, UUID habitId) {
 
         Habit habit = habitRepository.getHabitById(userResponse, habitId);
         if (habit == null) {

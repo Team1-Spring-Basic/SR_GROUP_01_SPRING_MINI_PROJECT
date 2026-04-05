@@ -1,6 +1,6 @@
 package com.example.springminiproject.service;
 
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.request.auth.LoginRequest;
 import com.example.springminiproject.model.request.auth.RegisterRequest;
 
