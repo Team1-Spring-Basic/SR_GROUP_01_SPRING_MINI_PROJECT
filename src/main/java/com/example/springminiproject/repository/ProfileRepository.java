@@ -5,6 +5,8 @@ import com.example.springminiproject.model.request.ProfileRequest;
 import com.example.springminiproject.util.UuidTypeHandler;
 import org.apache.ibatis.annotations.*;
 
+import java.util.UUID;
+
 @Mapper
 public interface ProfileRepository {
     @Results(id = "ProfileMapper", value = {
@@ -19,20 +21,20 @@ public interface ProfileRepository {
             @Result(property = "createdAt", column = "created_at")
     })
     @Select("""
-        select * from app_users;
+        select * from app_users where app_user_id=#{currentUserId};
     """)
-    AppUserResponse getUser();
+    AppUserResponse getUser(UUID currentUserId);
 
     @ResultMap("ProfileMapper")
     @Select("""
-        update app_users set username = #{req.username}, profile_image = #{req.profileImageUrl} returning *;
+        update app_users set username = #{req.username}, profile_image = #{req.profileImageUrl} where app_user_id=#{currentUserId} returning *;
     """)
-    AppUserResponse updateUser(@Param("req") ProfileRequest request);
+    AppUserResponse updateUser(UUID currentUserId, @Param("req") ProfileRequest request);
 
 
     @ResultMap("ProfileMapper")
     @Select("""
-        delete from app_users returning *
+        delete from app_users where app_user_id=#{currentUserId};
     """)
-    void deleteUser();
+    void deleteUser(UUID currentUserId);
 }

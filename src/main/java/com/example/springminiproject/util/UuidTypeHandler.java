@@ -46,7 +46,6 @@ public class UuidTypeHandler implements TypeHandler<UUID> {
         } else {
             ps.setObject(i, parameter.toString(), Types.OTHER);
         }
-
     }
 
     @Override
@@ -65,9 +64,8 @@ public class UuidTypeHandler implements TypeHandler<UUID> {
     }
 
     private static UUID toUUID(String val) {
-        if (!(val != null && !val.isEmpty())) {
+        if (val != null && !val.isEmpty()) {
             try {
-                assert val != null;
                 return UUID.fromString(val);
             } catch (IllegalArgumentException e) {
                 LOG.warn("Bad UUID found: {}", val);
