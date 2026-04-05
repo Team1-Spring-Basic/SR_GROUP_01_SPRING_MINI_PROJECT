@@ -24,4 +24,20 @@ public interface AchievementRepository {
         SELECT * FROM achievements WHERE achievement_id =#{achievementId}
     """)
     Achievement getAchievementById(UUID achievementId);
+
+    @ResultMap("achievementMapper")
+    @Select("""
+        SELECT
+            a.achievement_id,
+            a.title,
+            a.description,
+            a.badge,
+            a.xp_required
+        FROM app_user_achievements aua
+            LEFT JOIN achievements a ON aua.achievement_id = a.achievement_id
+        WHERE aua.app_user_id = #{appUserId}
+        ORDER BY aua.earned_at DESC
+        OFFSET #{offset} LIMIT #{size}
+    """)
+    List<Achievement> getAchievementByAppUserId(UUID appUserId, Integer offset, Integer size);
 }
