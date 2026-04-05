@@ -1,12 +1,13 @@
 package com.example.springminiproject.service.serviceImpl;
 
 import com.example.springminiproject.exception.NotFoundException;
-import com.example.springminiproject.model.entity.AppUserResponse;
+import com.example.springminiproject.model.response.AppUserResponse;
 import com.example.springminiproject.model.entity.HabitLog;
 import com.example.springminiproject.model.request.HabitLogRequest;
 import com.example.springminiproject.repository.HabitLogRepository;
 import com.example.springminiproject.service.HabitLogService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class HabitLogServiceImpl implements HabitLogService {
 
     private final HabitLogRepository habitLogRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public HabitLog getHabitLogById(UUID habitLogId) {
@@ -36,7 +38,7 @@ public class HabitLogServiceImpl implements HabitLogService {
 
         HabitLog habitLog = habitLogRepository.getHabitLogById(request.getHabitLogId());
 
-        AppUserResponse user = habitLog.getHabit().getAppUserResponse();
+        AppUserResponse user = modelMapper.map(habitLog.getHabit().getAppUserResponse(), AppUserResponse.class);
         updateXpAndLevel(user);
 
         habitLogRepository.updateXpAndLevel(user.getAppUserId(), user.getXp(), user.getLevel());

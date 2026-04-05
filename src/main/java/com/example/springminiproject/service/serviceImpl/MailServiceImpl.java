@@ -1,5 +1,6 @@
 package com.example.springminiproject.service.serviceImpl;
 
+import com.example.springminiproject.service.MailService;
 import com.example.springminiproject.util.OtpCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,9 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class MailService {
+public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
     private final RedisTemplate<String, String> redisTemplate;
+
     public void sendEmail(String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         String otp = OtpCodeGenerator.generate();
@@ -28,5 +30,4 @@ public class MailService {
         message.setTo(email);
         mailSender.send(message);
     }
-
 }
