@@ -11,6 +11,8 @@ INSERT INTO app_users (app_user_id, username, full_name, email, password, level,
                                                                                                       ('550e8400-0001-0000-0000-000000000003', 'admin_youlong', 'You Long',     'youlong@example.com',  '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 5, 3800, TRUE),
                                                                                                       ('550e8400-0001-0000-0000-000000000004', 'channary_h',   'Chan Channary', 'channary@example.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 1, 80,   FALSE);
 
+INSERT INTO app_users (app_user_id, username, full_name, email, password, level, xp, is_verified) VALUES ('dd5a5f04-25b4-4252-9109-37aceae50a1a', 'sangu_ku', 'Sangu Ku', 'sang@example.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 2, 200, TRUE);
+
 
 INSERT INTO app_user_roles (app_user_id, role_id) VALUES
                                                       ('550e8400-0001-0000-0000-000000000001', 'a1b2c3d4-0001-0000-0000-000000000001'), -- sokha    → ROLE_USER
