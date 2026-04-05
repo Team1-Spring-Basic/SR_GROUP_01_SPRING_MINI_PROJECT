@@ -46,4 +46,10 @@ public class AchievementServiceImpl implements AchievementService {
 
         return achievementRepository.getAchievementById(achievementId);
     }
+
+    @Override
+    public List<Achievement> getAchievementByAppUserId(UUID appUserId, Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return achievementRepository.getAchievementByAppUserId(appUserId, offset, size);
+    }
 }
