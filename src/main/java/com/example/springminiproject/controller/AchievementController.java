@@ -2,6 +2,7 @@ package com.example.springminiproject.controller;
 
 import com.example.springminiproject.exception.NotFoundException;
 import com.example.springminiproject.model.entity.Achievement;
+import com.example.springminiproject.model.entity.AppUser;
 import com.example.springminiproject.model.response.ApiResponse;
 import com.example.springminiproject.service.AchievementService;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -53,7 +55,7 @@ public class AchievementController {
         }
     }
 
-    @GetMapping("/{achievement-id}")
+   /* @GetMapping("/{achievement-id}")
     private ResponseEntity<ApiResponse<Achievement>> getAchievementById(@PathVariable("achievement-id") UUID achievementId){
 
         try {
@@ -77,5 +79,23 @@ public class AchievementController {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+    }*/
+
+    @GetMapping("/app-users")
+    public ResponseEntity<?> getAchievementByAppUserId(
+            @RequestParam(defaultValue = "1")  Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
+
+        AppUser appUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<Achievement> achievements = achievementService.getAchievementByAppUserId(appUser.getAppUserId(), page, size);
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .isSuccess(true)
+                        .status("200 OK")
+                        .message("Get Achievements Successfully")
+                        .payload(achievements)
+                        .build()
+        );
     }
 }
