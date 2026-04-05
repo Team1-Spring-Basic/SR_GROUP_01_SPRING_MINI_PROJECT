@@ -65,4 +65,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
+    @ExceptionHandler(UserInvalidCredential.class)
+    public ProblemDetail handleUserInvalidCredentialException(UserInvalidCredential e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setProperty("timestamp", Instant.now());
+        problemDetail.setType(URI.create("about:blank"));
+        return problemDetail;
+    }
+
+    @ExceptionHandler(UserEmailNotVerifiedException.class)
+    public ProblemDetail handleUserEmailNotVerifiedException(UserEmailNotVerifiedException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setType(URI.create("about:blank"));
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
 }

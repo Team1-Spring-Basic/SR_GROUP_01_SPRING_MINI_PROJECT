@@ -62,13 +62,13 @@ public class AuthServiceImpl implements AuthService {
                                  : userService.existsByUsername(credentials.getUsername());
 
         if (!exists) {
-            throw new UserInvalidCredential("Invalid username, email, or password. Please check your credentials and try again.");
+            throw new UserInvalidCredential();
         }
 
         Boolean isVerifiedUser = userService.isVerifiedUser(credentials.getUsername());
 
         if (!isVerifiedUser) {
-            throw new UserEmailNotVerifiedException("Your email address is not yet verified. Please verify your email before logging in.");
+            throw new UserEmailNotVerifiedException();
         }
 
         return jwtUtils.generateToken(credentials.getUsername());
